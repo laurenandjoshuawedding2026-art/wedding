@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1A1A1A;
+  --foreground: #FFFFFF;
+  --champagne: #F7E7CE;
+  --gold: #D4AF37;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-champagne: var(--champagne);
+  --color-gold: var(--gold);
+  --font-playfair: var(--font-playfair-display);
+  --font-inter: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0) 0%,
+    rgba(212, 175, 55, 0.8) 50%,
+    rgba(212, 175, 55, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-anim 3s infinite;
+}
+
+@keyframes shimmer-anim {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@utility light-sweep {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(30deg);
+    animation: sweep 6s infinite;
   }
 }
 
+@keyframes sweep {
+  0% { left: -60%; }
+  20% { left: 120%; }
+  100% { left: 120%; }
+}
+
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Grain_Noise.png');
+  background-repeat: repeat;
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
