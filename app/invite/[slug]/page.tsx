@@ -357,7 +357,7 @@ export default function InvitePage() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#0D0D0D] flex flex-col items-center justify-center p-6 overflow-hidden">
+    <main className="relative h-dvh bg-[#0D0D0D] flex flex-col items-center justify-start sm:justify-center p-4 sm:p-6 pt-10 sm:pt-0 overflow-hidden">
       {/* Grain Overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] z-50" />
       
@@ -464,7 +464,7 @@ export default function InvitePage() {
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full max-h-[calc(100dvh-200px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
+              className="w-full max-h-[calc(100dvh-180px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
