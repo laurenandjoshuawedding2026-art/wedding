@@ -68,8 +68,8 @@
 }
 
 html, body {
-  height: 100dvh; /* Prevents vertical scroll issues on mobile browsers */
-  overflow: hidden; /* Locks the background so only the card can scroll if needed */
+  min-height: 100dvh;
+  overflow-x: hidden; /* Allow vertical movement if necessary, but keep it tight */
 }
 
 body {

@@ -53,6 +53,12 @@
         "type": "number"
       },
       {
+        "initialValue": false,
+        "name": "hasResponded",
+        "type": "boolean",
+        "title": "Has Responded?"
+      },
+      {
         "options": {
           "list": [
             {
@@ -65,12 +71,10 @@
             }
           ]
         },
-        "readOnly": true,
         "name": "RSVP_status",
         "type": "string"
       },
       {
-        "readOnly": true,
         "name": "attending_count",
         "type": "number"
       },

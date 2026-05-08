@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-05-07T15:38:51.804Z",
+  "createdAt": "2026-05-08T05:02:15.440Z",
   "studioVersion": "5.23.0",
   "version": 3,
   "workspaces": [
@@ -13,7 +13,7 @@
       },
       "name": "default",
       "projectId": "6utncmxh",
-      "schema": "79257ea6.create-schema.json",
+      "schema": "28d99878.create-schema.json",
       "title": "Wedding Invite Studio",
       "tools": "a1fd46b5.create-tools.json"
     }

@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <main 
       onMouseMove={handleMouseMove}
-      className="relative flex min-h-screen flex-col items-center pt-10 pb-10 sm:pt-20 sm:pb-20 bg-[#0D0D0D] text-white overflow-hidden"
+      className="relative flex min-h-dvh flex-col items-center justify-center p-4 bg-[#0D0D0D] text-white overflow-hidden"
     >
       {/* Liquid Gold Live Shader Background */}
       <LiquidGoldBackground />
@@ -97,8 +97,8 @@ export default function Home() {
           initial="hidden"
           animate="visible"
           onSubmit={handleEnter}
-          className="text-center space-y-12 max-w-lg px-6 py-16 bg-[#FFF5EF] backdrop-blur-md rounded-2xl border border-[#A87526]/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]
-                     max-h-[calc(100dvh-80px)] overflow-y-auto"
+          className="w-full text-center space-y-8 sm:space-y-12 max-w-lg px-6 py-10 sm:py-16 bg-[#FFF5EF] backdrop-blur-md rounded-2xl border border-[#A87526]/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]
+                     max-h-[calc(100dvh-180px)] overflow-y-auto relative z-20"
         >
           <motion.div variants={itemVariants} className="space-y-6">
             <motion.div
