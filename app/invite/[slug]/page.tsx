@@ -475,7 +475,7 @@ export default function InvitePage() {
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full h-[calc(100dvh-150px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
+              className="w-full h-[calc(100dvh-110px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col overflow-hidden"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -600,7 +600,7 @@ export default function InvitePage() {
               {/* Content Stage (Updated to deep color theme) */}
               <div className="text-center text-[#A87526] flex-1 flex flex-col py-1 relative z-40">
                 {/* Top Section: Anchored Header and Countdown - Pushed down on mobile */}
-                <div className="flex-none flex flex-col justify-start pt-6 sm:pt-8 space-y-0.5 md:space-y-2">
+                <div className="flex-none flex flex-col justify-start pt-4 sm:pt-8 space-y-0.5 md:space-y-2">
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -645,7 +645,7 @@ export default function InvitePage() {
                 </div>
 
                 {/* Interactive Tabs: Raised divider and increased height for mobile visibility */}
-                <div className="pt-1 border-t border-[#A87526]/10 flex-1 flex flex-col min-h-0">
+                <div className="pt-1 border-t border-[#A87526]/10 flex-1 flex flex-col min-h-0 overflow-hidden">
                   <div className="relative w-full mb-2">
                     {/* New Styled Navigation Bar Container */}
                     <motion.div 
