@@ -475,7 +475,7 @@ export default function InvitePage() {
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full h-auto max-h-[calc(100dvh-180px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
+              className="w-full h-auto max-h-[calc(100dvh-140px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -652,7 +652,7 @@ export default function InvitePage() {
                       initial={{ x: 0 }}
                       animate={stage === "invitation" ? { x: [0, -20, 0] } : { x: 0 }}
                       transition={{ delay: 3, duration: 0.8, ease: "easeInOut" }}
-                      className="bg-[#A87526]/5 rounded-full p-0.5 backdrop-blur-sm border border-[#A87526]/10 w-full shadow-inner flex justify-start"
+                      className="bg-[#A87526]/8 rounded-full p-1 backdrop-blur-md border border-[#A87526]/15 w-full shadow-inner flex"
                     >
                       <div 
                         ref={navContainerRef}
@@ -662,7 +662,7 @@ export default function InvitePage() {
                           <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`font-inter text-[9px] md:text-[10px] uppercase tracking-[0.1em] transition-all px-3 py-2 rounded-full shrink-0 relative ${
+                            className={`font-inter text-[10px] md:text-[11px] uppercase tracking-[0.1em] transition-all px-4 py-2 rounded-full shrink-0 relative ${
                               activeTab === tab 
                                 ? "bg-[#A87526] text-[#FFF5EF] shadow-md" 
                                 : "text-[#A87526]/60 hover:text-[#A87526] hover:bg-[#A87526]/5"
@@ -698,7 +698,7 @@ export default function InvitePage() {
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className="flex-1 flex flex-col justify-start py-1"
+                      className="flex-1 overflow-y-auto custom-scrollbar pr-1 py-2"
                     >
                       {activeTab === "Details" && guest && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 items-center px-4">
