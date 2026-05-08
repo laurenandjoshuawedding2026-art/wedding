@@ -613,9 +613,7 @@ export default function InvitePage() {
                           </button>
                         ))}
                       </div>
-                    </motion.div>
                     {/* Enhanced Swipe Affordance */}
-                    <div className={`absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#FFF5EF] via-[#FFF5EF]/40 to-transparent z-10 pointer-events-none transition-opacity duration-300 ${userHasSwiped ? 'opacity-0' : 'opacity-100'}`} />
                     <div className={`absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#FFF5EF] via-[#FFF5EF]/40 to-transparent z-10 pointer-events-none transition-opacity duration-300 ${!showSwipeHint || userHasSwiped ? 'opacity-0' : 'opacity-100'}`} />
                   </div>
 
