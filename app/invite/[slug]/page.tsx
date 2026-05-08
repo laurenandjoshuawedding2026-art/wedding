@@ -475,7 +475,7 @@ export default function InvitePage() {
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full h-auto max-h-[calc(100dvh-140px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
+              className="w-full h-[calc(100dvh-150px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -652,7 +652,7 @@ export default function InvitePage() {
                       initial={{ x: 0 }}
                       animate={stage === "invitation" ? { x: [0, -20, 0] } : { x: 0 }}
                       transition={{ delay: 3, duration: 0.8, ease: "easeInOut" }}
-                      className="bg-[#A87526]/8 rounded-full p-1 backdrop-blur-md border border-[#A87526]/15 w-full shadow-inner flex"
+                      className="bg-[#A87526]/12 rounded-full p-1 backdrop-blur-md border border-[#A87526]/20 w-full shadow-inner flex"
                     >
                       <div 
                         ref={navContainerRef}
