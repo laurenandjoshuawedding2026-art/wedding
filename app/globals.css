@@ -68,10 +68,10 @@
 }
 
 html, body {
-  height: 100dvh; /* Use dynamic viewport height for better mobile compatibility */
-  width: 100vw; /* Ensure full width */
+  min-height: 100dvh;
+  width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  overflow-y: auto; /* Allow vertical scrolling if content exceeds viewport */
+  overflow-y: auto;
 }
 
 body {

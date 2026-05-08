@@ -372,7 +372,7 @@ export default function InvitePage() {
             key="envelope-container"
             exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             transition={{ duration: 0.8 }}
-            className="z-10 relative cursor-pointer perspective-2000 mx-auto"
+            className="z-10 relative cursor-pointer perspective-2000"
             onClick={handleEnvelopeClick}
           >
             <motion.div 
@@ -464,7 +464,7 @@ export default function InvitePage() {
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full max-h-[calc(100dvh-120px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col justify-start"
+              className="w-full max-h-[calc(100dvh-180px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -587,7 +587,7 @@ export default function InvitePage() {
               />
               
               {/* Content Stage (Updated to deep color theme) */}
-              <div className="text-center text-[#A87526] h-full flex flex-col py-2 overflow-y-auto relative z-40">
+              <div className="text-center text-[#A87526] flex-1 flex flex-col py-2 overflow-y-auto relative z-40">
                 {/* Top Section: Anchored Header and Countdown - Pushed down on mobile */}
                 <div className="flex-1 flex flex-col justify-start pt-12 md:pt-8 space-y-0.5 md:space-y-2 min-h-0 overflow-hidden">
                   <motion.div
@@ -910,7 +910,7 @@ export default function InvitePage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.5 }}
-          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/20 backdrop-blur-xl p-2 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
+          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/40 backdrop-blur-xl p-1.5 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
           onClick={() => setIsMusicOn(!isMusicOn)}
         >
           <div className="relative w-14 h-14 md:w-20 md:h-20 flex items-center justify-center bg-[#2c1810] rounded-xl shadow-inner border border-[#A87526]/30 overflow-hidden">
@@ -940,7 +940,7 @@ export default function InvitePage() {
             </AnimatePresence>
 
             {/* The Platter & Record */}
-            <div className="relative w-11 h-11 md:w-16 md:h-16 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-lg overflow-hidden">
+            <div className="relative w-10 h-10 md:w-16 md:h-16 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-lg overflow-hidden">
               {/* Internal Smooth Light Waves (Adjusted size for smaller player) */}
               <AnimatePresence>
                 {isMusicOn && (
@@ -955,7 +955,7 @@ export default function InvitePage() {
               <motion.div
                 animate={isMusicOn ? { rotate: 360 } : { rotate: 0 }} // Keep rotation for visual effect
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="w-9 h-9 md:w-14 md:h-14 rounded-full relative"
+                className="w-8 h-8 md:w-14 md:h-14 rounded-full relative"
                 style={{ 
                   background: 'conic-gradient(#111 0deg, #222 45deg, #111 90deg, #222 135deg, #111 180deg, #222 225deg, #111 270deg, #222 315deg, #111 360deg)'
                 }}
@@ -966,7 +966,7 @@ export default function InvitePage() {
                 <div className="absolute inset-3 rounded-full border border-white/5 opacity-10" />
                 
                 {/* Gold Label */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 md:w-4 md:h-4 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 md:w-4 md:h-4 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
                    <div className="w-1 h-1 bg-black/40 rounded-full" />
                 </div>
               </motion.div>

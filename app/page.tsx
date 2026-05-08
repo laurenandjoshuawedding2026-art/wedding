@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useMotionValue, useSpring, useTransform, Variants } from "framer-motion";
 import LiquidGoldBackground from "./components/LiquidGoldBackground";
@@ -33,7 +33,15 @@ export default function Home() {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Parallax Effect values
   const mouseX = useMotionValue(0);
@@ -43,8 +51,8 @@ export default function Home() {
   const dx = useSpring(mouseX, springConfig);
   const dy = useSpring(mouseY, springConfig);
 
-  const translateX = useTransform(dx, [-0.5, 0.5], ["-10px", "10px"]);
-  const translateY = useTransform(dy, [-0.5, 0.5], ["-10px", "10px"]);
+  const translateX = useTransform(dx, [-0.5, 0.5], isMobile ? ["0px", "0px"] : ["-10px", "10px"]);
+  const translateY = useTransform(dy, [-0.5, 0.5], isMobile ? ["0px", "0px"] : ["-10px", "10px"]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -90,15 +98,15 @@ export default function Home() {
 
       <motion.div
         style={{ x: translateX, y: translateY }}
-        className="relative z-20 flex flex-col items-center justify-center"
+        className="relative z-20 w-full flex flex-col items-center justify-center"
       >
         <motion.form 
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           onSubmit={handleEnter}
-          className="w-full text-center space-y-8 sm:space-y-12 max-w-lg px-6 py-10 sm:py-16 bg-[#FFF5EF] backdrop-blur-md rounded-2xl border border-[#A87526]/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]
-                     max-h-[calc(100dvh-100px)] overflow-y-auto relative z-20 mx-auto"
+          className="w-[calc(100%-2rem)] text-center space-y-8 sm:space-y-12 max-w-lg px-6 py-10 sm:py-16 bg-[#FFF5EF] backdrop-blur-md rounded-2xl border border-[#A87526]/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]
+                     max-h-[80dvh] overflow-y-auto relative z-20"
         >
           <motion.div variants={itemVariants} className="space-y-6">
             <motion.div
