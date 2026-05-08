@@ -80,6 +80,7 @@ export default function InvitePage() {
   const [isMobile, setIsMobile] = useState(false); // State for mobile detection
   const [isTablet, setIsTablet] = useState(false);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const [hintTimedOut, setHintTimedOut] = useState(false);
   const [userHasSwiped, setUserHasSwiped] = useState(false);
 
   useEffect(() => {
@@ -94,6 +95,16 @@ export default function InvitePage() {
       setStage("invitation");
     }
   }, [slug]);
+
+  // Handle swipe hint timeout
+  useEffect(() => {
+    if (showSwipeHint && !userHasSwiped && stage === "invitation") {
+      const timer = setTimeout(() => {
+        setHintTimedOut(true);
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSwipeHint, userHasSwiped, stage]);
 
   const saveToLocalCache = (key: string, data: any) => {
     localStorage.setItem(`offline_cache_${key}_${slug}`, JSON.stringify(data));
@@ -605,7 +616,7 @@ export default function InvitePage() {
                     <motion.h1 
                       animate={{ backgroundPosition: ["0% center", "-200% center"] }}
                       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                      className="font-playfair text-4xl sm:text-5xl md:text-7xl tracking-tight leading-tight bg-gradient-to-r from-[#8B5E1F] via-[#D4AF37] to-[#8B5E1F] bg-[length:200%_auto] bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                      className="font-playfair text-3xl sm:text-5xl md:text-7xl tracking-tight leading-tight bg-gradient-to-r from-[#8B5E1F] via-[#D4AF37] to-[#8B5E1F] bg-[length:200%_auto] bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(212,175,55,0.4)]"
                       style={{ textShadow: "0px 1.5px 2px rgba(255,255,255,0.7), 0 0 40px rgba(212,175,55,0.25)" }}
                     >
                       Lauren & Joshua
@@ -626,7 +637,7 @@ export default function InvitePage() {
                       { label: "Secs", value: timeLeft.seconds }
                     ].map((unit, i) => (
                       <div key={i} className="text-center">
-                        <p className="font-playfair text-base md:text-xl text-[#A87526]">{unit.value.toString().padStart(2, '0')}</p>
+                        <p className="font-playfair text-sm md:text-xl text-[#A87526]">{unit.value.toString().padStart(2, '0')}</p>
                         <p className="font-inter text-[6px] md:text-[7px] uppercase tracking-[0.2em] opacity-40">{unit.label}</p>
                       </div>
                     ))}
@@ -671,13 +682,13 @@ export default function InvitePage() {
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ 
-                      opacity: (showSwipeHint && !userHasSwiped && stage === "invitation") ? [0, 1, 0.5, 1] : 0,
+                      opacity: (showSwipeHint && !userHasSwiped && !hintTimedOut && stage === "invitation") ? [0, 1, 0.5, 1] : 0,
                     }}
                     transition={{ duration: 2, repeat: Infinity, delay: 3 }}
-                    className="flex justify-center items-center space-x-2 mb-0.5 h-3"
+                    className="flex justify-center items-center space-x-1 mb-0.5 h-3"
                   >
-                    <span className="font-inter text-[10px] uppercase tracking-[0.4em] text-[#D6AA67] font-bold">Swipe for more</span>
-                    <span className="text-[#D6AA67] text-sm">→</span>
+                    <span className="font-inter text-[8px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#D6AA67] font-bold">Swipe for more</span>
+                    <span className="text-[#D6AA67] text-xs sm:text-sm">→</span>
                   </motion.div>
 
                   <AnimatePresence mode="wait">
@@ -691,17 +702,17 @@ export default function InvitePage() {
                     >
                       {activeTab === "Details" && guest && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 items-center px-4">
-                          <motion.div variants={childItemVariants} className="space-y-1 md:space-y-4">
-                            <p className="font-inter text-[14px] tracking-[0.2em] uppercase text-[#D6AA67] font-bold">Venue</p>
-                            <p className="font-inter text-[15px] font-semibold text-[#D6AA67]">{venueName || "Dennis P. Ramdhan Complex"}</p>
-                            <p className="font-inter text-[13px] text-[#D6AA67] font-medium opacity-70">{venueAddress || "Couva, Trinidad & Tobago"}</p>
-                            <div className="h-px w-8 bg-[#A87526]/20 mx-auto my-4 md:hidden" />
+                          <motion.div variants={childItemVariants} className="space-y-0.5 md:space-y-4">
+                            <p className="font-inter text-[12px] sm:text-[14px] tracking-[0.2em] uppercase text-[#D6AA67] font-bold">Venue</p>
+                            <p className="font-inter text-[13px] sm:text-[15px] font-semibold text-[#D6AA67]">{venueName || "Dennis P. Ramdhan Complex"}</p>
+                            <p className="font-inter text-[11px] sm:text-[13px] text-[#D6AA67] font-medium opacity-70">{venueAddress || "Couva, Trinidad & Tobago"}</p>
+                            <div className="h-px w-8 bg-[#A87526]/20 mx-auto my-2 md:hidden" />
                             <p className="font-inter text-[12px] pt-1 italic font-medium text-[#D6AA67] hidden md:block">{venueDetails || "Ceremony begins at 3:00 PM"}</p>
                           </motion.div>
                           <motion.div variants={childItemVariants} className="bg-[#A87526]/5 border border-[#A87526]/10 p-3 md:p-6 space-y-1 md:space-y-2">
-                             <p className="font-inter text-[12px] text-[#D6AA67] font-bold uppercase tracking-[0.3em]">Your Reserved Seat</p>
-                             <p className="font-playfair text-3xl font-bold text-[#D6AA67]">Table No. {guest.table_number}</p>
-                             <p className="font-inter text-[12px] text-[#D6AA67] font-semibold opacity-60 uppercase tracking-[0.1em]">{guest.seats_reserved || 0} Seats reserved for you</p>
+                             <p className="font-inter text-[10px] sm:text-[12px] text-[#D6AA67] font-bold uppercase tracking-[0.3em]">Your Reserved Seat</p>
+                             <p className="font-playfair text-2xl sm:text-3xl font-bold text-[#D6AA67]">Table No. {guest.table_number}</p>
+                             <p className="font-inter text-[10px] sm:text-[12px] text-[#D6AA67] font-semibold opacity-60 uppercase tracking-[0.1em]">{guest.seats_reserved || 0} Seats reserved for you</p>
                           </motion.div>
                         </div>
                       )}
@@ -709,8 +720,8 @@ export default function InvitePage() {
                       {activeTab === "Attire" && (
                         <motion.div variants={tabContentVariants} className="space-y-2">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">The Palette</h4>
-                          <p className="text-[13px] uppercase tracking-[0.2em] font-bold text-[#D6AA67]">Formal Attire</p>
-                          <p className="text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
+                          <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] font-bold text-[#D6AA67]">Formal Attire</p>
+                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
                             {attireDescription || "We kindly request our guests to dress in formal attire. Please avoid wearing Champagne, Gold, or White."}
                           </p>
                         </motion.div>
@@ -719,10 +730,10 @@ export default function InvitePage() {
                       {activeTab === "Timeline" && (
                         <motion.div variants={tabContentVariants} className="space-y-2 max-w-xs mx-auto text-left px-2">
                           {(guest?.timeline || globalTimeline)?.map((item: { time: string; event: string }, i: number) => (
-                            <motion.div variants={childItemVariants} key={i} className="flex items-center space-x-6">
-                              <span className="font-inter text-[12px] text-[#D6AA67] font-bold w-16">{item.time}</span>
+                            <motion.div variants={childItemVariants} key={i} className="flex items-center space-x-4 sm:space-x-6">
+                              <span className="font-inter text-[11px] sm:text-[12px] text-[#D6AA67] font-bold w-14 sm:w-16">{item.time}</span>
                               <div className="h-2 w-2 rounded-full bg-[#D6AA67]/60" />
-                              <span className="font-inter text-[13px] font-bold tracking-widest uppercase text-[#D6AA67]">{item.event}</span>
+                              <span className="font-inter text-[12px] sm:text-[13px] font-bold tracking-widest uppercase text-[#D6AA67]">{item.event}</span>
                             </motion.div>
                           ))}
                         </motion.div>
@@ -731,7 +742,7 @@ export default function InvitePage() {
                       {activeTab === "Gifting" && (
                         <motion.div variants={tabContentVariants} className="space-y-2">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">With Love</h4>
-                          <p className="text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
+                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
                             {giftingDescription || "Your presence at our wedding is the greatest gift of all. Should you wish to contribute, a monetary gift would be warmly appreciated."}
                           </p>
                         </motion.div>
@@ -740,12 +751,12 @@ export default function InvitePage() {
                       {activeTab === "RSVP" && (
                         <motion.div variants={tabContentVariants} className="space-y-4">
                           {(!rsvpStatus || isEditing) ? ( // Added space-y-4 for mobile
-                            <motion.div variants={childItemVariants} className="space-y-4 md:space-y-6">
-                              <p className="font-inter text-[12px] text-[#D6AA67] font-bold tracking-widest uppercase italic opacity-70">Respond by June 6th, 2026</p>
+                            <motion.div variants={childItemVariants} className="space-y-2 sm:space-y-4 md:space-y-6">
+                              <p className="font-inter text-[11px] sm:text-[12px] text-[#D6AA67] font-bold tracking-widest uppercase italic opacity-70">Respond by June 6th, 2026</p>
 
-                              <div className="max-w-xs mx-auto space-y-4 md:space-y-6">
-                                <div className="space-y-2 text-left">
-                                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#D6AA67]">Your Name</p>
+                              <div className="max-w-xs mx-auto space-y-3 sm:space-y-4 md:space-y-6">
+                                <div className="space-y-1 sm:space-y-2 text-left">
+                                  <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-[#D6AA67]">Your Name</p>
                                   <input
                                     type="text"
                                     value={guestNameInput}
@@ -758,13 +769,13 @@ export default function InvitePage() {
 
                                 {guest && guest.seats_reserved > 1 && (
                                   <div className="space-y-3">
-                                    <p className="text-[12px] font-bold uppercase tracking-widest text-[#D6AA67]">Number of Guests</p>
+                                    <p className="text-[11px] sm:text-[12px] font-bold uppercase tracking-widest text-[#D6AA67]">Number of Guests</p>
                                     <div className="flex items-center justify-center space-x-6">
                                       <button 
                                         onClick={() => setAttendingCount(Math.max(1, attendingCount - 1))}
                                         className="w-8 h-8 rounded-full border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]"
                                       >–</button>
-                                      <span className="font-playfair text-3xl font-bold text-[#D6AA67] w-8">{attendingCount}</span>
+                                      <span className="font-playfair text-2xl sm:text-3xl font-bold text-[#D6AA67] w-8">{attendingCount}</span>
                                       <button 
                                         onClick={() => setAttendingCount(Math.min(guest.seats_reserved, attendingCount + 1))}
                                         className="w-8 h-8 rounded-full border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]"
@@ -773,8 +784,8 @@ export default function InvitePage() {
                                   </div>
                                 )}
 
-                                <div className="space-y-2 text-left">
-                                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#D6AA67]">Dietary Requirements</p>
+                                <div className="space-y-1 sm:space-y-2 text-left">
+                                  <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-[#D6AA67]">Dietary Requirements</p>
                                   <textarea
                                     value={dietaryRestrictions}
                                     onChange={(e) => setDietaryRestrictions(e.target.value)}
@@ -784,7 +795,7 @@ export default function InvitePage() {
                                   />
                                 </div>
 
-                                <div className="flex flex-col space-y-3">
+                                <div className="flex flex-col space-y-2 sm:space-y-3">
                                   <button 
                                     onClick={() => handleRSVPAction("attending")}
                                     className="w-full py-3 bg-[#D4AF37] text-black font-inter text-[10px] uppercase tracking-widest hover:bg-[#B8962E] transition-all shadow-lg disabled:opacity-50"
@@ -811,10 +822,10 @@ export default function InvitePage() {
                           ) : (
                             <motion.div variants={childItemVariants} className="space-y-8">
                               <div className="space-y-4">
-                                <p className="font-playfair text-3xl font-bold text-[#D6AA67]">
+                                <p className="font-playfair text-2xl sm:text-3xl font-bold text-[#D6AA67]">
                                   {rsvpStatus === "attending" ? "See you there!" : "We'll miss you"}
                                 </p>
-                                <p className="font-inter text-[13px] font-medium text-[#D6AA67] opacity-80 leading-relaxed max-w-xs mx-auto">
+                                <p className="font-inter text-[12px] sm:text-[13px] font-medium text-[#D6AA67] opacity-80 leading-relaxed max-w-xs mx-auto">
                                   {rsvpStatus === "attending" 
                                     ? `Thank you, ${guestNameInput}. We have you down for ${attendingCount} ${attendingCount === 1 ? 'seat' : 'seats'} at Table ${guest?.table_number}.`
                                     : "Thank you for letting us know. We're sorry you can't join us, but we appreciate the response."}
@@ -833,11 +844,11 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Wishes" && rsvpStatus && (
-                        <motion.div variants={tabContentVariants} className="space-y-4 max-w-xs mx-auto">
+                        <motion.div variants={tabContentVariants} className="space-y-3 sm:space-y-4 max-w-xs mx-auto">
                           {wishSubmitted ? (
                             <motion.div variants={childItemVariants} className="text-center py-4 md:py-4 space-y-4">
-                              <p className="font-playfair text-2xl md:text-3xl font-bold text-[#D6AA67]">Thank You!</p>
-                              <p className="text-[13px] font-medium text-[#D6AA67] opacity-80 leading-relaxed font-inter">
+                              <p className="font-playfair text-xl sm:text-2xl md:text-3xl font-bold text-[#D6AA67]">Thank You!</p>
+                              <p className="text-[12px] sm:text-[13px] font-medium text-[#D6AA67] opacity-80 leading-relaxed font-inter">
                                 Your beautiful wish has been received.
                               </p>
                               {wishCount < 3 ? (
@@ -856,16 +867,16 @@ export default function InvitePage() {
                             </motion.div>
                           ) : (
                             <>
-                              <h4 className="font-playfair text-xl font-bold text-[#D6AA67]">
+                              <h4 className="font-playfair text-lg sm:text-xl font-bold text-[#D6AA67]">
                                 {wishCount > 0 ? "Share More Love" : "Leave a Wish"}
                               </h4>
-                              <p className="text-[12px] font-medium text-[#D6AA67] opacity-70 leading-relaxed font-inter">
+                              <p className="text-[11px] sm:text-[12px] font-medium text-[#D6AA67] opacity-70 leading-relaxed font-inter">
                                 {wishCount > 0 
                                   ? `You have ${3 - wishCount} ${3 - wishCount === 1 ? 'wish' : 'wishes'} remaining.`
                                   : "Share your well wishes or a special message for Lauren & Joshua."
                                 }
                               </p>
-                              <form onSubmit={handleSubmitWish} className="space-y-4">
+                              <form onSubmit={handleSubmitWish} className="space-y-3 sm:space-y-4">
                                 <textarea
                                   value={wishMessage}
                                   onChange={(e) => setWishMessage(e.target.value)}
