@@ -43,8 +43,8 @@ export default function Home() {
   const dx = useSpring(mouseX, springConfig);
   const dy = useSpring(mouseY, springConfig);
 
-  const translateX = useTransform(dx, [-0.5, 0.5], ["-15px", "15px"]);
-  const translateY = useTransform(dy, [-0.5, 0.5], ["-15px", "15px"]);
+  const translateX = useTransform(dx, [-0.5, 0.5], ["-10px", "10px"]);
+  const translateY = useTransform(dy, [-0.5, 0.5], ["-10px", "10px"]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -90,7 +90,7 @@ export default function Home() {
 
       <motion.div
         style={{ x: translateX, y: translateY }}
-        className="relative z-20 w-full flex flex-col items-center justify-center"
+        className="relative z-20 flex flex-col items-center justify-center"
       >
         <motion.form 
           variants={containerVariants}
@@ -98,7 +98,7 @@ export default function Home() {
           animate="visible"
           onSubmit={handleEnter}
           className="w-full text-center space-y-8 sm:space-y-12 max-w-lg px-6 py-10 sm:py-16 bg-[#FFF5EF] backdrop-blur-md rounded-2xl border border-[#A87526]/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]
-                     max-h-[calc(100dvh-180px)] overflow-y-auto relative z-20"
+                     max-h-[calc(100dvh-100px)] overflow-y-auto relative z-20 mx-auto"
         >
           <motion.div variants={itemVariants} className="space-y-6">
             <motion.div
@@ -132,7 +132,7 @@ export default function Home() {
                 placeholder="Guest Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-white/40 border-b border-[#A87526]/20 py-4 text-center font-playfair text-xl sm:text-3xl focus:outline-none focus:border-[#A87526] transition-all duration-700 placeholder:text-[#A87526]/30 text-[#A87526] relative z-10 rounded-t-lg"
+                className="w-full bg-white/40 border-b border-[#A87526]/20 py-3 text-center font-playfair text-xl sm:text-3xl focus:outline-none focus:border-[#A87526] transition-all duration-700 placeholder:text-[#A87526]/30 text-[#A87526] relative z-10 rounded-t-lg"
               />
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#A87526] group-focus-within:w-full transition-all duration-1000 ease-out" />
             </div>

@@ -372,13 +372,13 @@ export default function InvitePage() {
             key="envelope-container"
             exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             transition={{ duration: 0.8 }}
-            className="z-10 relative cursor-pointer perspective-2000"
+            className="z-10 relative cursor-pointer perspective-2000 mx-auto"
             onClick={handleEnvelopeClick}
           >
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-8"
+              className="text-center mb-6 sm:mb-8"
             >
               <p className="font-playfair text-2xl sm:text-3xl md:text-5xl text-[#A87526] italic drop-shadow-sm px-4">Welcome, {displayName}</p>
             </motion.div>
@@ -457,14 +457,14 @@ export default function InvitePage() {
           <motion.div
             key="invitation-container"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 1, y: 0 }} // Ensure y is reset
             className="z-20 w-full max-w-2xl flex flex-col items-center"
             transition={{ duration: 1 }}
           >
             <motion.div
               layoutId="invitation-card"
               style={{ transformStyle: "preserve-3d" }}
-              className="w-full h-[80vh] max-h-[580px] md:h-[85vh] md:max-h-[750px] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col justify-start"
+              className="w-full max-h-[calc(100dvh-120px)] bg-[#FFF5EF] p-4 sm:p-6 md:p-12 border border-[#A87526]/20 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.25)] relative flex flex-col justify-start"
               onLayoutAnimationComplete={() => setStage("invitation")}
               animate={stage === "invitation" ? { y: [0, -5, 0] } : {}}
               transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -587,7 +587,7 @@ export default function InvitePage() {
               />
               
               {/* Content Stage (Updated to deep color theme) */}
-              <div className="text-center text-[#A87526] h-full flex flex-col py-0 overflow-hidden relative z-40">
+              <div className="text-center text-[#A87526] h-full flex flex-col py-2 overflow-y-auto relative z-40">
                 {/* Top Section: Anchored Header and Countdown - Pushed down on mobile */}
                 <div className="flex-1 flex flex-col justify-start pt-12 md:pt-8 space-y-0.5 md:space-y-2 min-h-0 overflow-hidden">
                   <motion.div
@@ -910,7 +910,7 @@ export default function InvitePage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.5 }}
-          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/20 backdrop-blur-xl p-3 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
+          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/20 backdrop-blur-xl p-2 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
           onClick={() => setIsMusicOn(!isMusicOn)}
         >
           <div className="relative w-14 h-14 md:w-20 md:h-20 flex items-center justify-center bg-[#2c1810] rounded-xl shadow-inner border border-[#A87526]/30 overflow-hidden">
@@ -941,7 +941,7 @@ export default function InvitePage() {
 
             {/* The Platter & Record */}
             <div className="relative w-11 h-11 md:w-16 md:h-16 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-lg overflow-hidden">
-              {/* Internal Smooth Light Waves */}
+              {/* Internal Smooth Light Waves (Adjusted size for smaller player) */}
               <AnimatePresence>
                 {isMusicOn && (
                   <motion.div 
@@ -953,7 +953,7 @@ export default function InvitePage() {
               </AnimatePresence>
 
               <motion.div
-                animate={isMusicOn ? { rotate: 360 } : { rotate: 0 }}
+                animate={isMusicOn ? { rotate: 360 } : { rotate: 0 }} // Keep rotation for visual effect
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 className="w-9 h-9 md:w-14 md:h-14 rounded-full relative"
                 style={{ 
@@ -966,7 +966,7 @@ export default function InvitePage() {
                 <div className="absolute inset-3 rounded-full border border-white/5 opacity-10" />
                 
                 {/* Gold Label */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 md:w-4 md:h-4 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
                    <div className="w-1 h-1 bg-black/40 rounded-full" />
                 </div>
               </motion.div>
@@ -974,17 +974,17 @@ export default function InvitePage() {
 
             {/* Tone Arm */}
             <motion.div
-              className="absolute top-2 right-2 w-1 md:w-1.5 h-7 md:h-10 origin-top-right z-10 pointer-events-none"
+              className="absolute top-1.5 right-1.5 w-0.5 md:w-1.5 h-5 md:h-10 origin-top-right z-10 pointer-events-none"
               initial={{ rotate: -45 }}
               animate={isMusicOn ? { rotate: -12 } : { rotate: -45 }}
               transition={{ duration: 1, ease: "easeInOut" }}
             >
                <div className="w-full h-full bg-[#D4AF37] rounded-full shadow-lg" />
-               <div className="absolute bottom-0 right-0 w-3 h-4 bg-[#A87526] rounded-[2px] transform translate-x-1.5" />
+               <div className="absolute bottom-0 right-0 w-2 h-3 bg-[#A87526] rounded-[2px] transform translate-x-1" />
             </motion.div>
           </div>
           
-          <div className="ml-3 flex flex-col items-start overflow-hidden">
+          <div className="ml-2 flex flex-col items-start overflow-hidden">
             <span className="text-[7px] md:text-[9px] tracking-[0.4em] uppercase text-[#A87526]/60 font-semibold">Melody</span>
             <span className="text-[9px] md:text-[11px] tracking-[0.1em] uppercase text-[#A87526] font-bold transition-all duration-500">
               {isMusicOn ? "Live" : "Muted"}

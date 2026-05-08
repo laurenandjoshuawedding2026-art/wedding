@@ -33,7 +33,7 @@ export function GuestListReport() {
   })
 
   return (
-    <div style={{ padding: '40px', background: 'white', color: 'black', minHeight: '100%', overflowY: 'auto' }}>
+    <div style={{ padding: '20px', background: 'white', color: 'black', minHeight: '100dvh', overflowY: 'auto' }}>
       <style>
         {`
           @media print {

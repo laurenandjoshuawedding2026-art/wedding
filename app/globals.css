@@ -68,8 +68,10 @@
 }
 
 html, body {
-  min-height: 100dvh;
-  overflow-x: hidden; /* Allow vertical movement if necessary, but keep it tight */
+  height: 100dvh; /* Use dynamic viewport height for better mobile compatibility */
+  width: 100vw; /* Ensure full width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling if content exceeds viewport */
 }
 
 body {
