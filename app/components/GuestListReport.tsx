@@ -8,11 +8,13 @@ const GUEST_REPORT_QUERY = `*[_type == "guest"] | order(name asc) {
   RSVP_status,
   attending_count,
   table_number,
-  dietary_restrictions
+  dietary_restrictions,
+  hasResponded
 }`
 
 export function GuestListReport() {
   const [guests, setGuests] = useState<any[]>([])
+  const [filter, setFilter] = useState<'all' | 'confirmed' | 'missing'>('all')
   const client = useClient({ apiVersion: '2023-01-01' })
 
   useEffect(() => {
@@ -23,6 +25,12 @@ export function GuestListReport() {
     (acc, curr) => acc + (curr.RSVP_status === 'attending' ? (curr.attending_count || 1) : 0),
     0
   )
+
+  const filteredGuests = guests.filter(guest => {
+    if (filter === 'confirmed') return guest.RSVP_status === 'attending';
+    if (filter === 'missing') return !guest.hasResponded;
+    return true;
+  })
 
   return (
     <div style={{ padding: '40px', background: 'white', color: 'black', minHeight: '100%', overflowY: 'auto' }}>
@@ -43,6 +51,21 @@ export function GuestListReport() {
           .card-label { font-size: 10px; text-transform: uppercase; color: #8B5E1F; letter-spacing: 0.1em; font-weight: bold; }
           .card-value { font-size: 28px; font-weight: bold; margin-top: 8px; color: #111; }
           
+          .filter-tabs { display: flex; gap: 10px; margin-top: 30px; }
+          .filter-btn { 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border: 1px solid #D6AA67;
+            background: transparent;
+            color: #8B5E1F;
+            transition: all 0.2s;
+          }
+          .filter-btn.active { background: #D6AA67; color: white; }
+          .filter-btn:hover { background: #F7E7CE; }
+
           table { width: 100%; border-collapse: collapse; margin-top: 40px; }
           th { 
             text-align: left; 
@@ -97,8 +120,29 @@ export function GuestListReport() {
           </div>
           <div className="card">
             <div className="card-label">Missing RSVP</div>
-            <div className="card-value">{guests.filter(g => !g.RSVP_status).length}</div>
+            <div className="card-value">{guests.filter(g => !g.hasResponded).length}</div>
           </div>
+        </div>
+
+        <div className="filter-tabs no-print">
+          <button 
+            onClick={() => setFilter('all')} 
+            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+          >
+            All Guests
+          </button>
+          <button 
+            onClick={() => setFilter('confirmed')} 
+            className={`filter-btn ${filter === 'confirmed' ? 'active' : ''}`}
+          >
+            Confirmed Only
+          </button>
+          <button 
+            onClick={() => setFilter('missing')} 
+            className={`filter-btn ${filter === 'missing' ? 'active' : ''}`}
+          >
+            Missing Responses
+          </button>
         </div>
 
         <table>
@@ -112,7 +156,7 @@ export function GuestListReport() {
             </tr>
           </thead>
           <tbody>
-            {guests.map((guest) => (
+            {filteredGuests.map((guest) => (
               <tr key={guest._id}>
                 <td style={{ fontWeight: '600' }}>{guest.name}</td>
                 <td>

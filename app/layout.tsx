@@ -23,7 +23,7 @@ export default function RootLayout({
   children,
 }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${inter.variable} h-full`}>
       <body className="font-inter antialiased bg-background text-foreground">
         <div className="grain-overlay" />
         {children}

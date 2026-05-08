@@ -36,6 +36,12 @@ export default defineType({
       type: 'number',
     }),
     defineField({
+      name: 'hasResponded',
+      title: 'Has Responded?',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'RSVP_status',
       title: 'RSVP Status',
       type: 'string',
@@ -45,13 +51,11 @@ export default defineType({
           { title: 'Declined', value: 'declined' },
         ],
       },
-      readOnly: true,
     }),
     defineField({
       name: 'attending_count',
       title: 'Attending Count',
       type: 'number',
-      readOnly: true,
     }),
     defineField({
       name: 'timeline',

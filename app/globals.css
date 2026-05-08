@@ -67,6 +67,11 @@
   background-repeat: repeat;
 }
 
+html, body {
+  height: 100dvh; /* Prevents vertical scroll issues on mobile browsers */
+  overflow: hidden; /* Locks the background so only the card can scroll if needed */
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
