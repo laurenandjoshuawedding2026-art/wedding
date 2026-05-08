@@ -545,7 +545,10 @@ export default function InvitePage() {
                     transition={{ delay: 0.6 }}
                     className="shrink-0"
                   >
-                    <p className="font-playfair italic text-sm md:text-lg text-[#A87526]">We are honored to have you, {displayName}</p>
+                    <p className="font-playfair italic text-sm md:text-lg text-[#A87526]">
+                      We are honored to have you,<br />
+                      <span className="whitespace-nowrap">{displayName}</span>
+                    </p>
                     <div className="h-px w-12 bg-[#A87526]/20 mx-auto mt-2" />
                   </motion.div>
 
@@ -880,10 +883,10 @@ export default function InvitePage() {
                 initial={{ opacity: 0, y: 10, scale: 0.8 }}
                 animate={{ opacity: 1, y: -10, scale: 1 }}
                 exit={{ opacity: 0, y: 0, scale: 0.8 }}
-                className="absolute bottom-full mb-4 left-0 bg-[#FFF5EF] text-[#A87526] px-3 py-2 rounded-lg text-[9px] uppercase tracking-widest font-bold shadow-xl border border-[#A87526]/20 whitespace-nowrap"
+                className="absolute bottom-full mb-2 left-0 bg-[#FFF5EF] text-[#A87526] px-2 py-1 rounded-md text-[7px] sm:text-[9px] uppercase tracking-wider font-bold shadow-xl border border-[#A87526]/20 whitespace-nowrap"
               >
                 Tap to pause/play melody
-                <div className="absolute top-full left-4 -translate-y-1/2 border-8 border-transparent border-t-[#FFF5EF]" />
+                <div className="absolute top-full left-4 -translate-y-1/2 border-[6px] border-transparent border-t-[#FFF5EF]" />
               </motion.div>
             )}
           </AnimatePresence>
