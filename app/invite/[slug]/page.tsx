@@ -1,33 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef, Suspense } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, Float, Environment, Clone } from "@react-three/drei";
 import LiquidGoldBackground from "../../components/LiquidGoldBackground";
 import { client, guestBySlugQuery } from "@/app/lib/sanity";
 import { submitRSVP } from "@/app/actions/rsvp";
 import { submitWish } from "@/app/actions/submitWish";
-import * as THREE from "three";
-
-function RoseModel({ url, position, rotation, scale = 1 }: any) {
-  // useGLTF caches the asset, but we must clone the scene to use it multiple times
-  const { scene } = useGLTF(url) as any;
-  
-  const groupRef = useRef<THREE.Group>(null);
-
-  return (
-    <group
-      ref={groupRef}
-      position={position} 
-      rotation={rotation} 
-      scale={scale}
-    >
-      <Clone object={scene} />
-    </group>
-  );
-}
 
 interface Guest {
   _id: string;
@@ -47,10 +26,6 @@ export default function InvitePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [guest, setGuest] = useState<Guest | null>(null);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
-  const [roseModelTopLeftUrl, setRoseModelTopLeftUrl] = useState<string | null>(null);
-  const [roseModelTopRightUrl, setRoseModelTopRightUrl] = useState<string | null>(null);
-  const [roseModelBottomLeftUrl, setRoseModelBottomLeftUrl] = useState<string | null>(null);
-  const [roseModelBottomRightUrl, setRoseModelBottomRightUrl] = useState<string | null>(null);
   const [thankYouVideoUrl, setThankYouVideoUrl] = useState<string | null>(null);
   const [weddingDate, setWeddingDate] = useState<string | null>(null);
   const [venueName, setVenueName] = useState<string | null>(null);
@@ -74,6 +49,8 @@ export default function InvitePage() {
   const [wishSubmitted, setWishSubmitted] = useState(false);
   const [wishCount, setWishCount] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [showMusicHint, setShowMusicHint] = useState(false);
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const navContainerRef = useRef<HTMLDivElement>(null);
   const [nameError, setNameError] = useState("");
@@ -106,6 +83,23 @@ export default function InvitePage() {
     }
   }, [showSwipeHint, userHasSwiped, stage]);
 
+  // Handle Toast Auto-hide
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  // Show music instructions once
+  useEffect(() => {
+    if (stage === "invitation") {
+      setShowMusicHint(true);
+      const timer = setTimeout(() => setShowMusicHint(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [stage]);
+
   const saveToLocalCache = (key: string, data: any) => {
     localStorage.setItem(`offline_cache_${key}_${slug}`, JSON.stringify(data));
   };
@@ -129,10 +123,6 @@ export default function InvitePage() {
             venueDetails,
             attireDescription,
             giftingDescription,
-            "roseModelTopLeftUrl": roseModelTopLeft.asset->url,
-            "roseModelTopRightUrl": roseModelTopRight.asset->url,
-            "roseModelBottomLeftUrl": roseModelBottomLeft.asset->url,
-            "roseModelBottomRightUrl": roseModelBottomRight.asset->url,
             timeline
           }`)
         ]);
@@ -159,12 +149,6 @@ export default function InvitePage() {
         }
         if (settingsData?.thankYouVideoUrl) {
           setThankYouVideoUrl(settingsData.thankYouVideoUrl);
-        }
-        if (settingsData) {
-          setRoseModelTopLeftUrl(settingsData.roseModelTopLeftUrl);
-          setRoseModelTopRightUrl(settingsData.roseModelTopRightUrl);
-          setRoseModelBottomLeftUrl(settingsData.roseModelBottomLeftUrl);
-          setRoseModelBottomRightUrl(settingsData.roseModelBottomRightUrl);
         }
         if (settingsData?.weddingDate) {
           setWeddingDate(settingsData.weddingDate);
@@ -284,6 +268,9 @@ export default function InvitePage() {
     if (result.success) {
       setRsvpStatus(status);
       setIsEditing(false);
+      setToast({ message: status === "attending" ? "RSVP confirmed! See you there." : "RSVP updated.", type: 'success' });
+    } else {
+      setToast({ message: "Failed to update RSVP. Please try again.", type: 'error' });
     }
     setIsSubmitting(false);
   };
@@ -302,6 +289,7 @@ export default function InvitePage() {
       localStorage.setItem(`wishCount_${slug}`, newCount.toString());
       setWishSubmitted(true);
       setWishMessage("");
+      setToast({ message: "Wish shared with Lauren & Joshua!", type: 'success' });
     }
     setIsSubmittingWish(false);
   };
@@ -530,56 +518,6 @@ export default function InvitePage() {
                   <path d="M50,20 Q60,50 50,80 M30,50 Q50,60 70,50" />
                 </svg>
               </div>
-              {/* 3D Scene Overlay for GLB Roses - Commented out for now (Internal comments removed to prevent syntax errors)
-              {(roseModelTopLeftUrl || roseModelTopRightUrl || roseModelBottomLeftUrl || roseModelBottomRightUrl) && (
-                <div className="absolute inset-[-100px] pointer-events-none z-30">
-                  <Canvas 
-                    camera={{ position: [0, 0, 10], fov: 35 }} 
-                    gl={{ alpha: true, antialias: true }}
-                    dpr={[1, 2]}
-                  >
-                    <ambientLight intensity={1.5} />
-                    <pointLight position={[5, 5, 5]} intensity={3} color="#D4AF37" />
-                    <spotLight position={[-5, 10, 5]} angle={0.15} penumbra={1} intensity={3} />
-                    <Environment preset="city" />
-                    <Suspense fallback={null}>
-                      {roseModelTopLeftUrl && (
-                        <RoseModel 
-                          url={roseModelTopLeftUrl} 
-                          position={isMobile ? [-1.375, 1.6, 0] : isTablet ? [-1.8, 1.5, 0] : [-2.175, 1.4, 0]} 
-                          rotation={[0, 4, 0]} 
-                          scale={isMobile ? 4.5 : isTablet ? 4.8 : 5} 
-                        />
-                      )}
-                      {roseModelTopRightUrl && (
-                        <RoseModel 
-                          url={roseModelTopRightUrl} 
-                          position={isMobile ? [1.5, 2.2, 0] : isTablet ? [2.0, 2.2, 0] : [2.4, 2.2, 0]} 
-                          rotation={[0, 1.5, Math.PI / 2]} 
-                          scale={isMobile ? 0.0175 : isTablet ? 0.019 : 0.02} 
-                        />
-                      )}
-                      {roseModelBottomLeftUrl && (
-                        <RoseModel 
-                          url={roseModelBottomLeftUrl} 
-                          position={isMobile ? [-1.14, -2.375, 0] : isTablet ? [-1.5, -2.4, 0] : [-1.8, -2.45, 0]} 
-                          rotation={[0, 2.5, -Math.PI / 4]} 
-                          scale={isMobile ? 0.1 : isTablet ? 0.1 : 0.1} 
-                        />
-                      )}
-                      {roseModelBottomRightUrl && (
-                        <RoseModel 
-                          url={roseModelBottomRightUrl} 
-                          position={isMobile ? [1.5, -2.0, 0] : isTablet ? [2.0, -1.9, 0] : [2.4, -1.9, 0]} 
-                          rotation={[5, 0, Math.PI]} 
-                          scale={isMobile ? 0.0075 : isTablet ? 0.009 : 0.01} 
-                        />
-                      )}
-                    </Suspense>
-                  </Canvas>
-                </div>
-              )}
-              */}
 
               {/* Enhanced 3D Borders (Static) */}
               <div 
@@ -910,6 +848,24 @@ export default function InvitePage() {
         )}
       </AnimatePresence>
 
+      {/* Toast Notification System */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-full shadow-2xl backdrop-blur-md border ${
+              toast.type === 'success' 
+                ? 'bg-[#A87526]/90 border-[#D4AF37]/50 text-white' 
+                : 'bg-red-900/90 border-red-500/50 text-white'
+            }`}
+          >
+            <p className="font-inter text-xs tracking-widest uppercase font-bold">{toast.message}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {musicUrl && (
         <audio ref={audioRef} src={musicUrl} loop />
       )}
@@ -917,7 +873,21 @@ export default function InvitePage() {
       {/* Bottom Controls */}
       <div className="fixed bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 flex justify-between items-center z-50 pointer-events-none">
         {/* Enhanced Mini Record Player Controller */}
-        <motion.div 
+        <div className="relative">
+          <AnimatePresence>
+            {showMusicHint && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                animate={{ opacity: 1, y: -10, scale: 1 }}
+                exit={{ opacity: 0, y: 0, scale: 0.8 }}
+                className="absolute bottom-full mb-4 left-0 bg-[#FFF5EF] text-[#A87526] px-3 py-2 rounded-lg text-[9px] uppercase tracking-widest font-bold shadow-xl border border-[#A87526]/20 whitespace-nowrap"
+              >
+                Tap to pause/play melody
+                <div className="absolute top-full left-4 -translate-y-1/2 border-8 border-transparent border-t-[#FFF5EF]" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.5 }}
@@ -1002,6 +972,7 @@ export default function InvitePage() {
             </span>
           </div>
         </motion.div>
+        </div>
         
         <div className="flex flex-col items-end space-y-2">
           {stage === "invitation" && (
