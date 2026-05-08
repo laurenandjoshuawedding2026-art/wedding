@@ -368,7 +368,7 @@ export default function InvitePage() {
   };
 
   return (
-    <main className="relative h-dvh bg-[#0D0D0D] flex flex-col items-center justify-start p-4 sm:p-6 pt-4 sm:pt-12 overflow-hidden">
+    <main className={`relative h-dvh bg-[#0D0D0D] flex flex-col items-center w-full ${stage === "envelope" ? "justify-center pt-0" : "justify-start pt-4 sm:pt-12"} p-4 sm:p-6 overflow-hidden`}>
       {/* Grain Overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] z-50" />
       
@@ -383,7 +383,7 @@ export default function InvitePage() {
             key="envelope-container"
             exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             transition={{ duration: 0.8 }}
-            className="z-10 relative cursor-pointer perspective-2000"
+            className="z-10 relative cursor-pointer perspective-2000 w-full flex flex-col items-center justify-center"
             onClick={handleEnvelopeClick}
           >
             <motion.div 
@@ -652,17 +652,17 @@ export default function InvitePage() {
                       initial={{ x: 0 }}
                       animate={stage === "invitation" ? { x: [0, -20, 0] } : { x: 0 }}
                       transition={{ delay: 3, duration: 0.8, ease: "easeInOut" }}
-                      className="bg-[#A87526]/12 rounded-full p-1 backdrop-blur-md border border-[#A87526]/20 w-full shadow-inner flex"
+                      className="bg-[#A87526]/12 rounded-full p-0.5 backdrop-blur-md border border-[#A87526]/20 w-full shadow-inner flex"
                     >
                       <div 
                         ref={navContainerRef}
-                        className="flex space-x-2 overflow-x-auto no-scrollbar px-4 py-0.5 scroll-smooth justify-start"
+                        className="flex space-x-2 overflow-x-auto no-scrollbar px-3 py-0.5 scroll-smooth justify-start"
                       >
                         {["Details", "Attire", "Timeline", "Gifting", "RSVP", ...(rsvpStatus ? ["Wishes"] : [])].map((tab) => (
                           <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`font-inter text-[10px] md:text-[11px] uppercase tracking-[0.1em] transition-all px-4 py-2 rounded-full shrink-0 relative ${
+                            className={`font-inter text-[10px] md:text-[11px] uppercase tracking-[0.1em] transition-all px-3 py-1.5 rounded-full shrink-0 relative ${
                               activeTab === tab 
                                 ? "bg-[#A87526] text-[#FFF5EF] shadow-md" 
                                 : "text-[#A87526]/60 hover:text-[#A87526] hover:bg-[#A87526]/5"
@@ -728,12 +728,12 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Timeline" && (
-                        <motion.div variants={tabContentVariants} className="space-y-2 max-w-xs mx-auto text-left px-2">
+                        <motion.div variants={tabContentVariants} className="space-y-1 max-w-xs mx-auto text-left px-2">
                           {(guest?.timeline || globalTimeline)?.map((item: { time: string; event: string }, i: number) => (
                             <motion.div variants={childItemVariants} key={i} className="flex items-center space-x-4 sm:space-x-6">
-                              <span className="font-inter text-[11px] sm:text-[12px] text-[#D6AA67] font-bold w-14 sm:w-16">{item.time}</span>
+                              <span className="font-inter text-[10px] sm:text-[11px] text-[#D6AA67] font-bold w-12 sm:w-14">{item.time}</span>
                               <div className="h-2 w-2 rounded-full bg-[#D6AA67]/60" />
-                              <span className="font-inter text-[12px] sm:text-[13px] font-bold tracking-widest uppercase text-[#D6AA67]">{item.event}</span>
+                              <span className="font-inter text-[11px] sm:text-[12px] font-bold tracking-widest uppercase text-[#D6AA67]">{item.event}</span>
                             </motion.div>
                           ))}
                         </motion.div>
@@ -881,13 +881,13 @@ export default function InvitePage() {
                                   value={wishMessage}
                                   onChange={(e) => setWishMessage(e.target.value)}
                                   placeholder="Your message..."
-                                  rows={4}
-                                  className="w-full bg-[#FFF5EF]/50 border border-[#A87526]/20 p-3 font-inter text-xs text-[#A87526] placeholder:text-[#A87526]/40 focus:outline-none focus:border-[#A87526] transition-all rounded-md"
+                                  rows={3}
+                                  className="w-full bg-[#FFF5EF]/50 border border-[#A87526]/20 p-2 font-inter text-xs text-[#A87526] placeholder:text-[#A87526]/40 focus:outline-none focus:border-[#A87526] transition-all rounded-md"
                                   disabled={isSubmittingWish}
                                 />
                                 <button
                                   type="submit"
-                                  className="w-full py-3 bg-[#A87526] text-white font-inter text-[10px] uppercase tracking-widest hover:bg-[#8B5E1F] transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                  className="w-full py-2 bg-[#A87526] text-white font-inter text-[10px] uppercase tracking-widest hover:bg-[#8B5E1F] transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                   disabled={isSubmittingWish || !wishMessage.trim() || wishCount >= 3}
                                 >
                                   {isSubmittingWish ? "Sending..." : wishCount >= 3 ? "Limit Reached" : "Send Wish"}
@@ -901,7 +901,7 @@ export default function InvitePage() {
                   </AnimatePresence>
                 </div>
 
-                <footer className="pt-2 text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#D6AA67] opacity-60 shrink-0">
+                <footer className="pt-2 text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#D6AA67] opacity-80 shrink-0">
                   Lauren & Joshua • 2026
                 </footer>
               </div>
@@ -921,10 +921,10 @@ export default function InvitePage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.5 }}
-          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/40 backdrop-blur-xl p-1.5 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
+          className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/40 backdrop-blur-xl p-1 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
           onClick={() => setIsMusicOn(!isMusicOn)}
         >
-          <div className="relative w-14 h-14 md:w-20 md:h-20 flex items-center justify-center bg-[#2c1810] rounded-xl shadow-inner border border-[#A87526]/30 overflow-hidden">
+          <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-[#2c1810] rounded-xl shadow-inner border border-[#A87526]/30 overflow-hidden">
             {/* Wood Texture Base */}
             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]" />
             
@@ -951,7 +951,7 @@ export default function InvitePage() {
             </AnimatePresence>
 
             {/* The Platter & Record */}
-            <div className="relative w-10 h-10 md:w-16 md:h-16 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-lg overflow-hidden">
+            <div className="relative w-9 h-9 md:w-13 md:h-13 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-lg overflow-hidden">
               {/* Internal Smooth Light Waves (Adjusted size for smaller player) */}
               <AnimatePresence>
                 {isMusicOn && (
@@ -966,7 +966,7 @@ export default function InvitePage() {
               <motion.div
                 animate={isMusicOn ? { rotate: 360 } : { rotate: 0 }} // Keep rotation for visual effect
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="w-8 h-8 md:w-14 md:h-14 rounded-full relative"
+                className="w-7 h-7 md:w-11 md:h-11 rounded-full relative"
                 style={{ 
                   background: 'conic-gradient(#111 0deg, #222 45deg, #111 90deg, #222 135deg, #111 180deg, #222 225deg, #111 270deg, #222 315deg, #111 360deg)'
                 }}
@@ -977,15 +977,15 @@ export default function InvitePage() {
                 <div className="absolute inset-3 rounded-full border border-white/5 opacity-10" />
                 
                 {/* Gold Label */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 md:w-4 md:h-4 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
-                   <div className="w-1 h-1 bg-black/40 rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 md:w-3 md:h-3 bg-[#D4AF37] rounded-full border border-[#A87526]/30 shadow-sm flex items-center justify-center">
+                   <div className="w-0.5 h-0.5 bg-black/40 rounded-full" />
                 </div>
               </motion.div>
             </div>
 
             {/* Tone Arm */}
             <motion.div
-              className="absolute top-1.5 right-1.5 w-0.5 md:w-1.5 h-5 md:h-10 origin-top-right z-10 pointer-events-none"
+              className="absolute top-1 right-1 w-0.5 md:w-1 h-4 md:h-8 origin-top-right z-10 pointer-events-none"
               initial={{ rotate: -45 }}
               animate={isMusicOn ? { rotate: -12 } : { rotate: -45 }}
               transition={{ duration: 1, ease: "easeInOut" }}
@@ -996,8 +996,8 @@ export default function InvitePage() {
           </div>
           
           <div className="ml-2 flex flex-col items-start overflow-hidden">
-            <span className="text-[7px] md:text-[9px] tracking-[0.4em] uppercase text-[#A87526]/60 font-semibold">Melody</span>
-            <span className="text-[9px] md:text-[11px] tracking-[0.1em] uppercase text-[#A87526] font-bold transition-all duration-500">
+            <span className="text-[6px] md:text-[8px] tracking-[0.4em] uppercase text-[#A87526]/60 font-semibold">Melody</span>
+            <span className="text-[8px] md:text-[10px] tracking-[0.1em] uppercase text-[#A87526] font-bold transition-all duration-500">
               {isMusicOn ? "Live" : "Muted"}
             </span>
           </div>
@@ -1012,7 +1012,7 @@ export default function InvitePage() {
                 localStorage.removeItem(`envelopeOpened_${slug}`);
                 router.push("/");
               }}
-              className="pointer-events-auto text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-[#8B5E1F] hover:text-[#A87526] transition-all bg-[#FFF5EF]/60 backdrop-blur-md px-5 py-2.5 rounded-full border-2 border-[#A87526]/40 shadow-lg active:scale-95"
+              className="pointer-events-auto text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-[#8B5E1F] hover:text-[#A87526] transition-all bg-[#FFF5EF]/60 backdrop-blur-md px-3 py-1.5 rounded-full border-2 border-[#A87526]/40 shadow-lg active:scale-95"
             >
               Replay Intro
             </motion.button>

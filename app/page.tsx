@@ -37,6 +37,16 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    // If they've already identified themselves and opened the envelope, skip the intro page
+    const savedSlug = localStorage.getItem("guestSlug");
+    if (savedSlug) {
+      const hasOpened = localStorage.getItem(`envelopeOpened_${savedSlug}`);
+      if (hasOpened === "true") {
+        router.push(`/invite/${savedSlug}`);
+        return;
+      }
+    }
+
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -70,6 +80,8 @@ export default function Home() {
       try {
         const guest = await client.fetch(findGuestByNameQuery, { name: `${name.trim()}*` });
         if (guest?.slug?.current) {
+          // Persist the slug to skip the root intro on subsequent visits
+          localStorage.setItem("guestSlug", guest.slug.current);
           router.push(`/invite/${guest.slug.current}`);
         } else {
           setError("Invitation not found. Try your first name or full name.");
