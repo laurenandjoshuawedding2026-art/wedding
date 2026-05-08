@@ -1,20 +1,20 @@
 import { Metadata } from "next";
+import { client } from "@/app/lib/sanity";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  // You can fetch specific guest data here if you want personalized OG titles
+  const settings = await client.fetch(`*[_type == "eventSettings"][0]{ "ogImage": inviteOgImage.asset->url }`);
+
   return {
     title: "You're Invited | Lauren & Joshua Wedding",
     description: "Please join us as we celebrate our special day.",
     openGraph: {
       title: "Lauren & Joshua Wedding Invitation",
       description: "We can't wait to celebrate with you!",
-      images: [
-        {
-          url: "/invite-og.jpg", // Resolves to your-domain.com/invite-og.jpg
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: settings?.ogImage ? [{
+        url: settings.ogImage,
+        width: 1200,
+        height: 630,
+      }] : [],
     },
   };
 }

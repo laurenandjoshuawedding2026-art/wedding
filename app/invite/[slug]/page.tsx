@@ -839,7 +839,7 @@ export default function InvitePage() {
                   </AnimatePresence>
                 </div>
 
-                <footer className="pt-2 text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#A87526] opacity-80 shrink-0">
+                <footer className="pt-2 text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#A87526] opacity-100 shrink-0 font-black">
                   Lauren & Joshua • 2026
                 </footer>
               </div>

@@ -62,6 +62,18 @@ export default defineType({
       type: 'text',
     }),
     defineField({
+      name: 'ogFallbackImage',
+      title: 'Default Open Graph Image',
+      type: 'image',
+      description: 'Image used for social media previews when no specific invite image is set (e.g., for the home page).',
+    }),
+    defineField({
+      name: 'inviteOgImage',
+      title: 'Invitation Open Graph Image',
+      type: 'image',
+      description: 'Image used for social media previews when sharing an individual invitation link.',
+    }),
+    defineField({
       name: 'roseModelTopLeft',
       title: 'Top Left Rose Model (.glb)',
       type: 'file',
