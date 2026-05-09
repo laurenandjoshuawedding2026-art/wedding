@@ -94,9 +94,13 @@ export default function InvitePage() {
   // Show music instructions once
   useEffect(() => {
     if (stage === "invitation") {
-      setShowMusicHint(true);
-      const timer = setTimeout(() => setShowMusicHint(false), 5000);
-      return () => clearTimeout(timer);
+      // Delay the hint so it doesn't appear before the invitation card is ready
+      const startTimer = setTimeout(() => {
+        setShowMusicHint(true);
+        const endTimer = setTimeout(() => setShowMusicHint(false), 5000);
+        return () => clearTimeout(endTimer);
+      }, 1000);
+      return () => clearTimeout(startTimer);
     }
   }, [stage]);
 
@@ -316,15 +320,19 @@ export default function InvitePage() {
     if (!el) return;
 
     const checkScrollable = () => {
-      setShowSwipeHint(el.scrollWidth > el.clientWidth + 2);
+      // Lenient check for scrollability
+      const isScrollable = el.scrollWidth > el.clientWidth + 1;
+      // On mobile, if we can't determine yet, default to true if the screen is narrow
+      const isLikelyMobileOverflow = window.innerWidth < 480 && el.scrollWidth > 0;
+      setShowSwipeHint(isScrollable || isLikelyMobileOverflow);
     };
 
     const handleScroll = () => {
       if (el.scrollLeft > 15) setUserHasSwiped(true);
     };
 
-    // Small delay to allow DOM/Framer layout to finish
-    const timeoutId = setTimeout(checkScrollable, 100);
+    // Increased delay to ensure layout is fully calculated on mobile
+    const timeoutId = setTimeout(checkScrollable, 400);
 
     window.addEventListener('resize', checkScrollable);
     el.addEventListener('scroll', handleScroll);
@@ -623,9 +631,9 @@ export default function InvitePage() {
                       opacity: (showSwipeHint && !userHasSwiped && stage === "invitation") ? [0, 1, 0.5, 1] : 0,
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="flex justify-center items-center space-x-1 mb-0.5 h-3"
+                    className="flex justify-center items-center space-x-1 mb-0.5 h-3 z-50"
                   >
-                    <span className="font-inter text-[8px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#D6AA67] font-bold">Swipe for more</span>
+                    <span className="font-inter text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#A87526] font-black drop-shadow-sm">Swipe for more</span>
                     <span className="text-[#D6AA67] text-xs sm:text-sm">→</span>
                   </motion.div>
 
@@ -892,7 +900,7 @@ export default function InvitePage() {
           <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.5 }}
+          transition={{ delay: 2.2, duration: 0.8 }}
           className="pointer-events-auto flex items-center group cursor-pointer bg-[#FFF5EF]/40 backdrop-blur-xl p-1 rounded-2xl border border-[#A87526]/30 shadow-2xl transition-all hover:bg-[#FFF5EF]/30"
           onClick={() => setIsMusicOn(!isMusicOn)}
         >
@@ -981,6 +989,7 @@ export default function InvitePage() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ delay: 2.5 }}
               onClick={() => {
                 localStorage.removeItem(`envelopeOpened_${slug}`);
                 router.push("/");
