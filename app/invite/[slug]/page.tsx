@@ -320,11 +320,11 @@ export default function InvitePage() {
     if (!el) return;
 
     const checkScrollable = () => {
-      // Lenient check for scrollability
+      if (!el) return;
       const isScrollable = el.scrollWidth > el.clientWidth + 1;
-      // On mobile, if we can't determine yet, default to true if the screen is narrow
-      const isLikelyMobileOverflow = window.innerWidth < 480 && el.scrollWidth > 0;
-      setShowSwipeHint(isScrollable || isLikelyMobileOverflow);
+      // Force hint visibility on mobile/narrow screens where overflow is guaranteed or highly likely
+      const isNarrowScreen = window.innerWidth < 640;
+      setShowSwipeHint(isScrollable || isNarrowScreen);
     };
 
     const handleScroll = () => {
@@ -633,7 +633,7 @@ export default function InvitePage() {
                     transition={{ duration: 2, repeat: Infinity }}
                     className="flex justify-center items-center space-x-1 mb-0.5 h-3 z-50"
                   >
-                    <span className="font-inter text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#A87526] font-black drop-shadow-sm">Swipe for more</span>
+                    <span className="font-inter text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#A87526] font-semibold opacity-70">Swipe for more</span>
                     <span className="text-[#D6AA67] text-xs sm:text-sm">→</span>
                   </motion.div>
 
