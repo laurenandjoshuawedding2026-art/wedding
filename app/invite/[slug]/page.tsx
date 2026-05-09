@@ -647,7 +647,7 @@ export default function InvitePage() {
                             <p className="font-inter text-[13px] sm:text-[15px] font-semibold text-[#D6AA67]">{venueName || "Dennis P. Ramdhan Complex"}</p>
                             <p className="font-inter text-[11px] sm:text-[13px] text-[#D6AA67] font-medium opacity-70">{venueAddress || "Couva, Trinidad & Tobago"}</p>
                             <div className="h-px w-8 bg-[#A87526]/20 mx-auto my-2 md:hidden" />
-                            <p className="font-inter text-[12px] pt-1 italic font-medium text-[#D6AA67] hidden md:block">{venueDetails || "Ceremony begins at 3:00 PM"}</p>
+                            <p className="font-inter text-[12px] pt-1 italic font-medium text-[#D6AA67] hidden md:block whitespace-pre-wrap">{venueDetails || "Ceremony begins at 3:00 PM"}</p>
                           </motion.div>
                           <motion.div variants={childItemVariants} className="bg-[#A87526]/5 border border-[#A87526]/10 p-3 md:p-6 space-y-1 md:space-y-2">
                              <p className="font-inter text-[10px] sm:text-[12px] text-[#D6AA67] font-bold uppercase tracking-[0.3em]">Your Reserved Seat</p>
@@ -682,7 +682,7 @@ export default function InvitePage() {
                       {activeTab === "Gifting" && (
                         <motion.div variants={tabContentVariants} className="space-y-2">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">With Love</h4>
-                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
+                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter whitespace-pre-wrap">
                             {giftingDescription || "Your presence at our wedding is the greatest gift of all. Should you wish to contribute, a monetary gift would be warmly appreciated."}
                           </p>
                         </motion.div>
