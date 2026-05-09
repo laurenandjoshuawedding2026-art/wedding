@@ -592,7 +592,7 @@ export default function InvitePage() {
                     <motion.div 
                       initial={{ x: 0 }}
                       animate={stage === "invitation" ? { x: [0, -20, 0] } : { x: 0 }}
-                      transition={{ delay: 3, duration: 0.8, ease: "easeInOut" }}
+                      transition={{ duration: 0.8, ease: "easeInOut" }}
                       className="bg-[#A87526]/12 rounded-full p-0.5 backdrop-blur-md border border-[#A87526]/20 w-full shadow-inner flex"
                     >
                       <div 
@@ -614,17 +614,15 @@ export default function InvitePage() {
                         ))}
                       </div>
                     </motion.div>
-                    {/* Enhanced Swipe Affordance */}
-                    <div className={`absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#FFF5EF] via-[#FFF5EF]/40 to-transparent z-10 pointer-events-none transition-opacity duration-300 ${!showSwipeHint || userHasSwiped ? 'opacity-0' : 'opacity-100'}`} />
                   </div>
 
                   {/* Visual Swipe Hint */}
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ 
-                      opacity: (showSwipeHint && !userHasSwiped && !hintTimedOut && stage === "invitation") ? [0, 1, 0.5, 1] : 0,
+                      opacity: (showSwipeHint && !userHasSwiped && stage === "invitation") ? [0, 1, 0.5, 1] : 0,
                     }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 3 }}
+                    transition={{ duration: 2, repeat: Infinity }}
                     className="flex justify-center items-center space-x-1 mb-0.5 h-3"
                   >
                     <span className="font-inter text-[8px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#D6AA67] font-bold">Swipe for more</span>
