@@ -645,9 +645,9 @@ export default function InvitePage() {
                           <motion.div variants={childItemVariants} className="space-y-0.5 md:space-y-4">
                             <p className="font-inter text-[12px] sm:text-[14px] tracking-[0.2em] uppercase text-[#D6AA67] font-bold">Venue</p>
                             <p className="font-inter text-[13px] sm:text-[15px] font-semibold text-[#D6AA67]">{venueName || "Dennis P. Ramdhan Complex"}</p>
-                            <p className="font-inter text-[11px] sm:text-[13px] text-[#D6AA67] font-medium opacity-70">{venueAddress || "Couva, Trinidad & Tobago"}</p>
+                            <p className="font-inter text-[11px] sm:text-[13px] text-[#D6AA67] font-medium opacity-70 whitespace-pre-wrap">{venueAddress || "Couva, Trinidad & Tobago"}</p>
                             <div className="h-px w-8 bg-[#A87526]/20 mx-auto my-2 md:hidden" />
-                            <p className="font-inter text-[12px] pt-1 italic font-medium text-[#D6AA67] hidden md:block whitespace-pre-wrap">{venueDetails || "Ceremony begins at 3:00 PM"}</p>
+                            <p className="font-inter text-[12px] pt-1 italic font-medium text-[#D6AA67] whitespace-pre-wrap">{venueDetails || "Ceremony begins at 3:00 PM"}</p>
                           </motion.div>
                           <motion.div variants={childItemVariants} className="bg-[#A87526]/5 border border-[#A87526]/10 p-3 md:p-6 space-y-1 md:space-y-2">
                              <p className="font-inter text-[10px] sm:text-[12px] text-[#D6AA67] font-bold uppercase tracking-[0.3em]">Your Reserved Seat</p>
@@ -661,7 +661,7 @@ export default function InvitePage() {
                         <motion.div variants={tabContentVariants} className="space-y-2">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">The Palette</h4>
                           <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] font-bold text-[#D6AA67]">Formal Attire</p>
-                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter">
+                          <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter whitespace-pre-wrap">
                             {attireDescription || "We kindly request our guests to dress in formal attire. Please avoid wearing Champagne, Gold, or White."}
                           </p>
                         </motion.div>
@@ -767,7 +767,7 @@ export default function InvitePage() {
                                 </p>
                                 <p className="font-inter text-[12px] sm:text-[13px] font-medium text-[#D6AA67] opacity-80 leading-relaxed max-w-xs mx-auto">
                                   {rsvpStatus === "attending" 
-                                    ? `Thank you, ${guestNameInput}. We have you down for ${attendingCount} ${attendingCount === 1 ? 'seat' : 'seats'} at Table ${guest?.table_number}.`
+                                    ? `Thank you, ${guestNameInput}. We have you down for ${attendingCount} ${attendingCount === 1 ? 'seat' : 'seats'} at Table ${guest?.table_number}.${dietaryRestrictions ? ` We've noted your dietary requirements: ${dietaryRestrictions}` : ''}`
                                     : "Thank you for letting us know. We're sorry you can't join us, but we appreciate the response."}
                                 </p>
                               </div>
