@@ -638,10 +638,10 @@ export default function InvitePage() {
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className="flex-1 overflow-y-auto custom-scrollbar pr-1 py-2"
+                      className="flex-1 overflow-y-auto custom-scrollbar pr-1 pt-2 pb-16"
                     >
                       {activeTab === "Details" && guest && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 items-center px-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 items-center px-4 pb-4">
                           <motion.div variants={childItemVariants} className="space-y-0.5 md:space-y-4">
                             <p className="font-inter text-[12px] sm:text-[14px] tracking-[0.2em] uppercase text-[#D6AA67] font-bold">Venue</p>
                             <p className="font-inter text-[13px] sm:text-[15px] font-semibold text-[#D6AA67]">{venueName || "Dennis P. Ramdhan Complex"}</p>
@@ -658,7 +658,7 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Attire" && (
-                        <motion.div variants={tabContentVariants} className="space-y-2">
+                        <motion.div variants={tabContentVariants} className="space-y-2 pb-4">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">The Palette</h4>
                           <p className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] font-bold text-[#D6AA67]">Formal Attire</p>
                           <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter whitespace-pre-wrap">
@@ -668,7 +668,7 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Timeline" && (
-                        <motion.div variants={tabContentVariants} className="space-y-1 max-w-xs mx-auto text-left px-2">
+                        <motion.div variants={tabContentVariants} className="space-y-1 max-w-xs mx-auto text-left px-2 pb-4">
                           {(guest?.timeline || globalTimeline)?.map((item: { time: string; event: string }, i: number) => (
                             <motion.div variants={childItemVariants} key={i} className="flex items-center space-x-4 sm:space-x-6">
                               <span className="font-inter text-[10px] sm:text-[11px] text-[#D6AA67] font-bold w-12 sm:w-14">{item.time}</span>
@@ -680,7 +680,7 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Gifting" && (
-                        <motion.div variants={tabContentVariants} className="space-y-2">
+                        <motion.div variants={tabContentVariants} className="space-y-2 pb-4">
                           <h4 className="font-playfair text-lg md:text-xl font-bold text-[#D6AA67]">With Love</h4>
                           <p className="text-[11px] sm:text-[13px] leading-relaxed text-[#D6AA67] font-medium opacity-80 max-w-xs mx-auto font-inter whitespace-pre-wrap">
                             {giftingDescription || "Your presence at our wedding is the greatest gift of all. Should you wish to contribute, a monetary gift would be warmly appreciated."}
@@ -689,7 +689,7 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "RSVP" && (
-                        <motion.div variants={tabContentVariants} className="space-y-4">
+                        <motion.div variants={tabContentVariants} className="space-y-4 pb-4">
                           {(!rsvpStatus || isEditing) ? ( // Added space-y-4 for mobile
                             <motion.div variants={childItemVariants} className="space-y-2 sm:space-y-4 md:space-y-6">
                               <p className="font-inter text-[11px] sm:text-[12px] text-[#D6AA67] font-bold tracking-widest uppercase italic opacity-70">Respond by June 6th, 2026</p>
@@ -784,7 +784,7 @@ export default function InvitePage() {
                       )}
 
                       {activeTab === "Wishes" && rsvpStatus && (
-                        <motion.div variants={tabContentVariants} className="space-y-3 sm:space-y-4 max-w-xs mx-auto">
+                        <motion.div variants={tabContentVariants} className="space-y-3 sm:space-y-4 max-w-xs mx-auto pb-4">
                           {wishSubmitted ? (
                             <motion.div variants={childItemVariants} className="text-center py-4 md:py-4 space-y-4">
                               <p className="font-playfair text-xl sm:text-2xl md:text-3xl font-bold text-[#D6AA67]">Thank You!</p>
