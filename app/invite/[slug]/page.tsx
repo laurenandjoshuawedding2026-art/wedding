@@ -536,7 +536,7 @@ export default function InvitePage() {
               />
               
               {/* Content Stage (Updated to deep color theme) */}
-              <div className="text-center text-[#A87526] flex-1 flex flex-col py-1 relative z-40">
+              <div className="text-center text-[#A87526] flex-1 flex flex-col min-h-0 py-1 relative z-40">
                 {/* Top Section: Anchored Header and Countdown - Pushed down on mobile */}
                 <div className="flex-none flex flex-col justify-start pt-4 sm:pt-8 space-y-0.5 md:space-y-2">
                   <motion.div
@@ -631,14 +631,15 @@ export default function InvitePage() {
                     <span className="text-[#D6AA67] text-xs sm:text-sm">→</span>
                   </motion.div>
 
-                  <AnimatePresence mode="wait">
+                  <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 pt-2 pb-16 touch-pan-y">
+                    <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTab}
                       variants={tabContentVariants}
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className="flex-1 overflow-y-auto custom-scrollbar pr-1 pt-2 pb-16"
+                      className="w-full"
                     >
                       {activeTab === "Details" && guest && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 items-center px-4 pb-4">
@@ -838,7 +839,8 @@ export default function InvitePage() {
                         </motion.div>
                       )}
                     </motion.div>
-                  </AnimatePresence>
+                    </AnimatePresence>
+                  </div>
                 </div>
 
                 <footer className="pt-2 text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#A87526] opacity-100 shrink-0 font-black">
@@ -1006,7 +1008,7 @@ export default function InvitePage() {
           scrollbar-width: none;
         }
         .custom-scrollbar::-webkit-scrollbar {
-          width: 3px;
+          width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
